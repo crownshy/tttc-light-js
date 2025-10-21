@@ -4,7 +4,7 @@ FROM node:24-alpine AS base
 # Install dependencies only when needed
 FROM base AS deps
 # Add libc6-compat for Alpine
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat python3 make g++
 WORKDIR /app
 
 # Copy package files for both common and next-client
