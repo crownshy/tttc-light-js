@@ -1,0 +1,39 @@
+# Development Dockerfile for next-client
+FROM node:24-alpine
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apk add --no-cache libc6-compat curl
+
+# Copy package files
+COPY common/package*.json ./common/
+COPY next-client/package*.json ./next-client/
+
+# Install dependencies
+RUN npm install --prefix ./common
+RUN npm install --prefix ./next-client
+
+# Copy source code
+COPY common/ ./common/
+COPY next-client/ ./next-client/
+
+# Build common package
+RUN npm run build --prefix ./common
+
+# Create non-root user
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs && \
+    chown -R nextjs:nodejs /app
+USER nextjs
+
+# Set environment variables
+ENV NODE_ENV=development
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+ENV NEXT_TELEMETRY_DISABLED=1
+
+EXPOSE 3000
+
+# Development command with hot reloading
+CMD ["npm", "run", "dev", "--prefix", "./next-client"]

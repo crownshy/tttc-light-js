@@ -1,0 +1,41 @@
+version: '3.8'
+
+# Development override for docker-compose.yml
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  pyserver:
+    build:
+      dockerfile: pyserver/Dockerfile.dev
+    volumes:
+      - ./pyserver:/app:cached
+      - /app/__pycache__
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+      - WATCHDOG_ENABLED=true
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  express-server:
+    build:
+      dockerfile: express-server/Dockerfile.dev
+    volumes:
+      - ./express-server/src:/usr/src/app/express-server/src:cached
+      - ./common:/usr/src/app/common:cached
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+    command: npm run dev --prefix ./express-server
+
+  next-client:
+    build:
+      dockerfile: next-client/Dockerfile.dev
+    volumes:
+      - ./next-client/src:/app/next-client/src:cached
+      - ./next-client/public:/app/next-client/public:cached
+      - ./common:/app/common:cached
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+      - NEXT_TELEMETRY_DISABLED=1
+    command: npm run dev --prefix ./next-client

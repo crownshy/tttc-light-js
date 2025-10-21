@@ -1,0 +1,38 @@
+# Development Dockerfile for express-server
+FROM node:24-slim
+
+WORKDIR /usr/src/app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy package files
+COPY common/package*.json ./common/
+COPY express-server/package*.json ./express-server/
+
+# Install dependencies
+RUN npm install --prefix ./common
+RUN npm install --prefix ./express-server
+
+# Copy source code
+COPY common/ ./common/
+COPY express-server/ ./express-server/
+
+# Build common package
+RUN npm run build --prefix ./common
+
+# Create non-root user
+RUN useradd --create-home --shell /bin/bash appuser && \
+    chown -R appuser:appuser /usr/src/app
+USER appuser
+
+# Set environment variables
+ENV NODE_ENV=development
+ENV PORT=8080
+
+EXPOSE 8080
+
+# Development command with hot reloading
+CMD ["npm", "run", "dev", "--prefix", "./express-server"]
