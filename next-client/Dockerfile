@@ -29,6 +29,7 @@ COPY common/ ./common/
 COPY next-client/ ./next-client/
 
 # Build common first
+ENV NODE_ENV=production
 RUN npm run build --prefix ./common
 # Then build next-client with standalone output
 RUN npm run build --prefix ./next-client
