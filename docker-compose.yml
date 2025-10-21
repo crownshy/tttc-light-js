@@ -24,8 +24,6 @@ services:
     environment:
       - PORT=8000
       - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-http://localhost:3000}
-    volumes:
-      - ./pyserver:/app
     depends_on:
       - redis
     healthcheck:
