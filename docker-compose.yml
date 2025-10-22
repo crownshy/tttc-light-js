@@ -19,8 +19,6 @@ services:
     build:
       context: .
       dockerfile: pyserver/Dockerfile
-    ports:
-      - "8002:8000"
     environment:
       - PORT=8000
       - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-http://localhost:3000}
@@ -32,13 +30,11 @@ services:
     build:
       context: .
       dockerfile: express-server/Dockerfile
-    ports:
-      - "8081:8080"
     environment:
       - NODE_ENV=${NODE_ENV:-development}
       - PORT=8080
       - CLIENT_BASE_URL=${CLIENT_BASE_URL:-http://localhost:3000}
-      - PYSERVER_URL=http://pyserver:8002
+      - PYSERVER_URL=http://pyserver:8000
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_URL=redis://redis:6379
@@ -68,11 +64,9 @@ services:
     build:
       context: .
       dockerfile: next-client/Dockerfile
-    ports:
-      - "3000:3000"
     environment:
       - NODE_ENV=${NODE_ENV:-development}
-      - PIPELINE_EXPRESS_URL=http://express-server:8081
+      - PIPELINE_EXPRESS_URL=http://express-server:8080
       - NEXT_PUBLIC_FIREBASE_API_KEY=${NEXT_PUBLIC_FIREBASE_API_KEY}
       - NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN}
       - NEXT_PUBLIC_FIREBASE_PROJECT_ID=${NEXT_PUBLIC_FIREBASE_PROJECT_ID}
