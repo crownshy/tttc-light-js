@@ -52,6 +52,15 @@ const Title = () => (
     </p>
   </Col>
 );
+const CrownShy = () => (
+	<Col className="p-8" gap={2}>
+		<h4>CrownShy</h4>
+		<p>
+			This instance of TTTC is an unofficial fork of the original project
+			which you can find at <a href='https://talktothe.city/'>https://talktothe.city/</a>
+		</p>
+	</Col>
+)
 
 const About = () => (
   <Col className="p-8" gap={2}>
@@ -168,15 +177,15 @@ const SampleReports = () => {
 };
 
 const CaseStudy = ({
-  title,
-  imageUri,
-  date,
-  resourceUrl,
+	title,
+	imageUri,
+	date,
+	resourceUrl,
 }: {
-  title: string;
-  imageUri: string;
-  date: string;
-  resourceUrl: string;
+	title: string;
+	imageUri: string;
+	date: string;
+	resourceUrl: string;
 }) => (
   <Card className="w-full md:max-w-[260px] transition-transform duration-200 transform hover:opacity-90">
     <a
@@ -264,19 +273,19 @@ const HowItWorks = () => (
 );
 
 const NumSignpost = ({
-  backgroundColor,
-  borderColor,
-  num,
+	backgroundColor,
+	borderColor,
+	num,
 }: {
-  backgroundColor: BackgroundAccentClass;
-  borderColor: BorderClass;
-  num: number;
+	backgroundColor: BackgroundAccentClass;
+	borderColor: BorderClass;
+	num: number;
 }) => (
-  <div
-    className={`h-6 w-6 rounded-sm ${borderColor} ${backgroundColor} border-[1px] flex`}
-  >
-    <p className="p-medium mx-auto">{num}</p>
-  </div>
+	<div
+		className={`h-6 w-6 rounded-sm ${borderColor} ${backgroundColor} border-[1px] flex`}
+	>
+		<p className="p-medium mx-auto">{num}</p>
+	</div>
 );
 
 const WhoIsItFor = () => (
