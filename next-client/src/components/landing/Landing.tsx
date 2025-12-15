@@ -57,15 +57,6 @@ const Title = () => (
 		</p>
 	</Col>
 );
-const CrownShy = () => (
-	<Col className="p-8" gap={2}>
-		<h4>CrownShy</h4>
-		<p>
-			This instance of TTTC is an unofficial fork of the original project
-			which you can find at <a href='https://talktothe.city/'>https://talktothe.city/</a>
-		</p>
-	</Col>
-)
 
 const About = () => (
 	<Col className="p-8" gap={2}>
